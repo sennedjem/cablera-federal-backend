@@ -11,8 +11,8 @@ class Update extends BasicRequest{
 	
     public function rules() {
         return [
-			'name' => ['required' ],
-			'email' => [ 'email','required'],
+			'name'     => ['required' ],
+			'email'    => ['email','required'],
             'password' => ['required']
         ];
     }

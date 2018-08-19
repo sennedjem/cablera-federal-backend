@@ -18,7 +18,8 @@ Route::middleware('auth:api')->group(function() {
 	//Route::post('login', 'LoginController@do')->name('login');
 	//Route::apiResource('user', 'UserController');
 });
-	Route::apiResource('user', 'UserController');
+	Route::apiResource('users', 'UsersController');
+	Route::apiResource('sites', 'SitesController');
 
 
 

@@ -9,7 +9,7 @@ use App\Http\Requests\User\Update;
 use App\Models\User;
 use Log;
 
-class UserController extends Controller {
+class UsersController extends Controller {
 
     /**
      * Display a listing of the resource.

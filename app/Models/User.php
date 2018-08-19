@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Site;
 
 class User extends Model {
    
@@ -15,6 +15,9 @@ class User extends Model {
  
     protected $hidden = ['password'];
 
+    public function sites() {
+        return $this->hasMany(Site::class);
+    }
 
 
 }
