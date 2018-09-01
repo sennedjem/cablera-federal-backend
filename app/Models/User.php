@@ -39,5 +39,24 @@ class User extends Authenticatable implements AuthenticatableUserContract  {
         ];
     }
 
+     public function setPasswordAttribute($value) {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+
+    public static function createOwner() {
+        $properties = [
+            'name' => "admin",
+            'email' => "cablerafederal@gmail.com",
+            'password' => 'admin123'
+        ];
+        $user = new User($properties);
+
+        $user->save();
+
+        return $user;
+    }
+
+
 
 }
