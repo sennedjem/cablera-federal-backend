@@ -9,17 +9,18 @@ class Site extends Model {
    
     protected $fillable = [
         'type',
-        'url',
-        'user_id'
+        'url'
+        //,'user_id'
     ];
  	
- 	protected $with = ['user'];
+ 	//protected $with = ['user'];
 
     protected $hidden = [];
 
+    /*
     public function user() {
         return $this->belongsTo(User::class);
-    }
+    }*/
 
 
 }

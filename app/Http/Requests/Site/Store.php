@@ -13,9 +13,8 @@ class Store extends BasicRequest{
 		$types = \Config::get('sites.types');
         
         return [
-			'url'     => ['required','url'],
-			'type'    => ['required', 'in:'.implode(',', $types)],
-            'user_id' => [ 'required', 'exists:users,id']
+			'url'     => ['required'],
+			'type'    => ['required', 'in:'.implode(',', $types)]
         ];
     }
     
