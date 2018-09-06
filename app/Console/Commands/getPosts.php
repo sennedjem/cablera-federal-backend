@@ -14,14 +14,14 @@ class getPosts extends Command{
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'posts:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update posts';
 
     /**
      * Create a new command instance.
@@ -48,7 +48,6 @@ class getPosts extends Command{
         $response = $client -> get('http://twitrss.me/twitter_user_to_rss/?user='.$account);
         $xml = $response->xml();
         $items = $xml->channel->item;
-        Log::info(count($items));
         for ($i=0; $i<count($items); $i++) {
             if(!Post::postsExist($items[$i]->link)){               
                 $this->addTwitterPost($items[$i],$account);
