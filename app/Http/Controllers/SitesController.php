@@ -37,6 +37,10 @@ class SitesController extends Controller {
         return response() -> json($site);
     }
 
+    public function getTypes(Request $request){
+        return response() -> json(array_values(\Config::get('sites.types')));
+    }
+
     /**
      * Update the specified resource in storage.
      */
