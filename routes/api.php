@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 */
 
 Route::name('login')->post('login','LoginController@login');
+Route::apiResource('users', 'UsersController');
 Route::middleware('auth:api')->group(function() {
-	Route::name('logout')->get('logout', 'LoginController@logout');
-	Route::apiResource('users', 'UsersController');
+    Route::name('logout')->get('logout', 'LoginController@logout');
 	Route::apiResource('sites', 'SitesController');
 });
 
