@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\Store;
 use App\Http\Requests\User\Update;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Log;
 
@@ -57,5 +58,8 @@ class UsersController extends Controller {
         return response() -> json($deleted);
     }
 
+    public function getLoggedCustomer(){
+        return Auth::user();
+    }
 
 }
