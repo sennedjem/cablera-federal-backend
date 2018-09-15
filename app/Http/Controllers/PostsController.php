@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Post\Update;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostsController extends Controller{
     //
@@ -15,5 +17,20 @@ class PostsController extends Controller{
     public function index(Request $request){
         //
         return response() -> json(Post::filter($request));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Update $request, $id){
+        //
+        $post = Post::find($id);
+        $tags = $request->input('tags');
+        $post -> fill($request->validated());
+        $post -> save();
+        Tag::ifDoesntExistCreate($tags);
+        $post->tags()->sync(array_map('strtolower', $tags));
+
+    	return response() -> json($post);
     }
 }
