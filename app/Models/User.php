@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Site;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject as AuthenticatableUserContract;
-
-
+use App\Traits\Filterable;
 
 class User extends Authenticatable implements AuthenticatableUserContract  {
+
+    use Filterable;
    
     protected $fillable = [
         'name',

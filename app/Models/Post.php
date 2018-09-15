@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Traits\Filterable;
 
 class Post extends Model {
+
+    use Filterable;
    
     protected $fillable = [
         'id',

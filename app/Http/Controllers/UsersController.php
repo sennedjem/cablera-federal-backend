@@ -18,7 +18,7 @@ class UsersController extends Controller {
      */
     public function index(Request $request){
         //
-        return response() -> json(User::all());
+        return response() -> json(User::filter($request));
     }
 
     /**

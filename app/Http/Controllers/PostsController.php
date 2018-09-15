@@ -14,6 +14,6 @@ class PostsController extends Controller{
      */
     public function index(Request $request){
         //
-        return response() -> json(Post::all());
+        return response() -> json(Post::filter($request));
     }
 }

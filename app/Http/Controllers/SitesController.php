@@ -16,7 +16,7 @@ class SitesController extends Controller {
      */
     public function index(Request $request){
         //
-        return response() -> json(Site::all());
+        return response() -> json(Site::filter($request));
     }
 
     /**
