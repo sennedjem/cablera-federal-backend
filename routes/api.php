@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 
 Route::name('login')->post('login','LoginController@login');
 Route::post('users','UsersController@store');
-Route::get('posts','PostsController@index');
 Route::middleware('auth:api')->group(function() {
 	Route::name('logout')->get('logout', 'LoginController@logout');
 	//Route::apiResource('users', 'UsersController');
+	Route::get('posts','PostsController@index');
 	Route::get('sites/types','SitesController@getTypes');
 	Route::apiResource('sites', 'SitesController');
 });
