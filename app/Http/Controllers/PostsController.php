@@ -19,6 +19,11 @@ class PostsController extends Controller{
         return response() -> json(Post::filter($request));
     }
 
+    public function show(Request $request, $id){
+        //
+        return response() -> json(Post::find($id));
+    }
+
     /**
      * Update the specified resource in storage.
      */

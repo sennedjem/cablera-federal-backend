@@ -19,6 +19,7 @@ Route::middleware('auth:api')->group(function() {
 	Route::name('logout')->get('logout', 'LoginController@logout');
 	//Route::apiResource('users', 'UsersController');
 	Route::get('posts','PostsController@index');
+	Route::get('posts/{id}','PostsController@show');
 	Route::put('posts/{id}','PostsController@update');
 	Route::get('sites/types','SitesController@getTypes');
 	Route::apiResource('sites', 'SitesController');
