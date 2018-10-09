@@ -17,6 +17,8 @@ class PostsController extends Controller{
      */
     public function index(Request $request){
         //
+        $request->sort_by = 'id';
+        $request->sort_dir = 'DESC';
         return response() -> json(Post::filter($request));
     }
 

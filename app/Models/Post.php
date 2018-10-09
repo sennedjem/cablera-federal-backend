@@ -16,7 +16,9 @@ class Post extends Model {
         'site',
         'creation_date',
         'content',
-        'url'
+        'url',
+        'image',
+        'title'
     ];
 
     protected $hidden = [];
