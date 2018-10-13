@@ -11,13 +11,6 @@ Use Log;
 class getPosts extends Command{
 
     /**
-     *  Prop: Hash que relaciona nombre de sitios RSS con su direccion url para obtener el feed.
-     */
-    protected $rssHash = array(
-        '#ElNumeral' => "http://elnumeral.com/feed/"
-    );
-
-    /**
      * The name and signature of the console command.
      *
      * @var string
