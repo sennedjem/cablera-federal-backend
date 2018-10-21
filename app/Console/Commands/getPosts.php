@@ -54,6 +54,7 @@ class getPosts extends Command{
         $xml = $response->xml();
         $image = $xml->channel->image->url;
         $items = $xml->channel->item;
+
         for ($i=count($items); $i>0; $i--) {
             if(!Post::postsExist($items[$i-1]->link)){
                 $this->addTwitterPost($items[$i-1],$account,$image);
@@ -98,11 +99,17 @@ class getPosts extends Command{
                 'url' => $item->link,
                 'image' => $image
         ]);
-        $post -> save();
+
+        //TODO: No se tiene que hacer asi
+        try{
+
+            $post -> save();
+        }catch (\Exception $e){
+            echo $this->_getTwitterContent($item) . PHP_EOL;
+        }
     }
 
     public function addRSSPost($item,$site){
-
         $post = new Post([
                 'site' => $site,
                 'creation_date' => $item->pubDate,
@@ -111,7 +118,14 @@ class getPosts extends Command{
                 'url' => $item->link,
                 'image' => $this->_getRssImage($item)
         ]);
-        $post -> save();
+
+        //TODO: No se tiene que hacer asi
+        try{
+
+            $post -> save();
+        }catch (\Exception $e){
+            echo $this->_getRssImage($item) . PHP_EOL;
+        }
     }
 
     public function _getTwitterContent($item){
@@ -146,6 +160,7 @@ class getPosts extends Command{
             $contentInitPos+3,
             strpos($text,'&#')-$contentInitPos-5
         );
+
 
         return $content;
     }
