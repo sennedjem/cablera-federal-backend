@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('es','ElasticSearchController@index');
 Route::name('login')->post('login','LoginController@login');
 Route::post('users','UsersController@store');
-Route::get('es','ElasticSearchController@index');
 Route::middleware('auth:api')->group(function() {
     Route::name('logout')->get('logout', 'LoginController@logout');
     //Route::apiResource('users', 'UsersController');
