@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Laravel\Socialite\SocialiteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Basemkhirat\Elasticsearch\ElasticsearchServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
 
     ],
@@ -207,6 +208,7 @@ return [
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
         'DB' => Illuminate\Support\Facades\DB::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
+        'ES' => Basemkhirat\Elasticsearch\Facades\ES::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,

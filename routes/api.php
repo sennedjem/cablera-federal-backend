@@ -13,17 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('es','ElasticSearchController@index');
 Route::name('login')->post('login','LoginController@login');
 Route::post('users','UsersController@store');
 Route::middleware('auth:api')->group(function() {
-	Route::name('logout')->get('logout', 'LoginController@logout');
-	//Route::apiResource('users', 'UsersController');
-	Route::get('posts','PostsController@index');
-	Route::get('posts/{id}','PostsController@show');
-	Route::put('posts/{id}','PostsController@update');
-	Route::get('sites/types','SitesController@getTypes');
-	Route::apiResource('sites', 'SitesController');
-	Route::apiResource('media', 'MediaController');
+    Route::name('logout')->get('logout', 'LoginController@logout');
+    //Route::apiResource('users', 'UsersController');
+    Route::get('posts','PostsController@index');
+    Route::get('posts/{id}','PostsController@show');
+    Route::put('posts/{id}','PostsController@update');
+    Route::get('sites/types','SitesController@getTypes');
+    Route::apiResource('sites', 'SitesController');
+
 });
 
 
