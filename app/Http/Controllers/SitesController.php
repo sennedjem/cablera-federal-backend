@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Site\Store;
+use App\Http\Requests\Site\Update;
 use App\Models\Site;
 use Log;
 
@@ -44,7 +45,7 @@ class SitesController extends Controller {
     /**
      * Update the specified resource in storage.
      */
-    public function update(Store $request, Site $site){
+    public function update(Update $request, Site $site){
         //
         $site -> fill($request->validated());
         $site -> save();
