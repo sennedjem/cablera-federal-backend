@@ -24,6 +24,8 @@ Route::middleware('auth:api')->group(function() {
     Route::put('posts/{id}','PostsController@update');
     Route::get('sites/types','SitesController@getTypes');
     Route::apiResource('sites', 'SitesController');
+	Route::apiResource('media', 'MediaController');
+
 });
 
 
