@@ -13,7 +13,7 @@ class Store extends BasicRequest{
         
         return [
 			'name'     => ['required'],
-			'district'     => ['string']
+			'district' => ['string']
         ];
     }
     

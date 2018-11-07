@@ -7,16 +7,18 @@ use App\Traits\Filterable;
 
 class Media extends Model {
 
+
     use Filterable;
    
+	protected $table = 'media';
+
+	public $primaryKey = 'id';
+
     protected $fillable = [
-        'id',
         'name',
         'district'
     ];
 
     protected $hidden = [];
-
-
 
 }

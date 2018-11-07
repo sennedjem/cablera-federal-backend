@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Media;
 use App\Http\Requests\Media\Store;
@@ -21,8 +22,18 @@ class MediaController extends Controller{
      * Display the specified resource.
      *
      */
-    public function show(Request $request, Media $media){
+    public function show(Request $request, $id){
         //
+        //dd( Media::find($media));
+
+        $media = Media::find($id);
+
+        if(is_null($media)) {
+            return response()->json([
+                        'message' => "Media not found",
+                    ], 404);
+        }
+
         return response() -> json($media); 
     }
 
@@ -38,8 +49,14 @@ class MediaController extends Controller{
     /**
      * Update the specified resource in storage.
      */
-    public function update(Store $request, Media $media){
+    public function update(Store $request, $id){
         //
+        $media = Media::find($id);
+        if(is_null($media)) {
+            return response()->json([
+                        'message' => "Media not found",
+                    ], 404);
+        }
         $media -> fill($request->validated());
         $media -> save();
     	  return response() -> json($media);
@@ -48,10 +65,18 @@ class MediaController extends Controller{
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Media $media
-        ){
+    public function destroy(Request $request, $id){
         //
+        $media = Media::find($id);
+
+        if(is_null($media)) {
+            return response()->json([
+                        'message' => "Media not found",
+                    ], 404);
+        }
+
         $deleted = $media -> delete();
+
         return response() -> json($deleted);
     }
 }
