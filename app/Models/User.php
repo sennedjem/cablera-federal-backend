@@ -15,7 +15,8 @@ class User extends Authenticatable implements AuthenticatableUserContract  {
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
+        'id'
     ];
  
     protected $hidden = ['password'];
@@ -47,9 +48,10 @@ class User extends Authenticatable implements AuthenticatableUserContract  {
 
     public static function createOwner() {
         $properties = [
-            'name' => "admin",
-            'email' => "cablerafederal@gmail.com",
-            'password' => 'admin123'
+            'name'     => "admin",
+            'email'    => "cablerafederalll@gmail.com",
+            'password' => 'admin123',
+            'id'       => '1'
         ];
         $user = new User($properties);
 

@@ -16,7 +16,8 @@ class Media extends Model {
 
     protected $fillable = [
         'name',
-        'district'
+        'district',
+        'id'
     ];
 
     protected $hidden = [];
