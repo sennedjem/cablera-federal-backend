@@ -4,6 +4,7 @@ namespace App\Models;
 
 use GuzzleHttp\Client;
 use Log;
+use DB;
 
 class Twitter extends Site {
 
@@ -26,16 +27,36 @@ class Twitter extends Site {
     }
 
     function buildPost($item, $parseData){
-        return new Post([
-            'site' => $this->url,
-            'creation_date' => $item->pubDate,
-            'content' => $this->_getContent($item),
-            'url' => $item->link,
-            'image' => $parseData['image']
-        ]);
+        $hashtags = $this->getHashtags($this->_getContent($item));
+
+        DB::beginTransaction();
+        try {
+            $post = Post::create([
+                'site' => $this->url,
+                'creation_date' => $item->pubDate,
+                'content' => $this->_getContent($item),
+                'url' => $item->link,
+                'image' => $parseData['image']
+            ]);
+            Tag::ifDoesntExistCreate($hashtags);
+            $post->tags()->sync(array_map('strtolower', $hashtags));
+            //$post->save();
+            DB::commit();
+            return $post;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            DB::rollback();
+            return null;
+        }
+
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    private function getHashtags($text){
+        preg_match_all('/#([^\s]+)/', $text, $matches);
+        return $matches[1];
+    }
 
     public function _getContent($item){
         $title = substr(
