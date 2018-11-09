@@ -16,7 +16,7 @@ class Update extends BasicRequest{
 			'creation_date' => ['required'],
 			'content'       => ['required'],
 			'url'           => ['required'],
-			'tags'          => ['required','array']
+			'tags'          => ['array']
         ];
     }
     
