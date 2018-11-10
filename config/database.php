@@ -57,7 +57,7 @@ return [
         'clearDB' => [
             'driver' => 'mysql',
             'port' => env('DB_PORT', '3306'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('us-cdbr-iron-east-01.cleardb.net', '127.0.0.1'),
             'database' => env('heroku_2236722739c5534', 'forge'),
             'username' => env('b36c02e247993d', 'forge'),
             'password' => env('ca3e819a', ''),
