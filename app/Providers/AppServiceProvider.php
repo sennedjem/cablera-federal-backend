@@ -14,18 +14,18 @@ class   AppServiceProvider extends ServiceProvider{
      * @return void
      */
     public function boot(){
-        Schema::defaultStringLength(191);
 
-        Validator::extend('uniqueTypeAndUrl', function ($attribute, $value, $parameters, $validator) {
+        Schema::defaultStringLength(191);
+        /*Validator::extend('uniqueTypeAndUrl', function ($attribute, $value, $parameters, $validator) {
             $sites = Site::where('url', $value)
                                 ->where('type', $parameters[0]);
             if(count($parameters)>1){
                 $sites = $sites -> where('id','!=',$parameters[1]);
-               
+
             }
-            $count = $sites -> count();            
+            $count = $sites -> count();
             return $count === 0;
-        });
+        });*/
     }
 
     /**
