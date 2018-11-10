@@ -16,7 +16,7 @@ class   AppServiceProvider extends ServiceProvider{
     public function boot(){
 
         Schema::defaultStringLength(191);
-        /*Validator::extend('uniqueTypeAndUrl', function ($attribute, $value, $parameters, $validator) {
+        Validator::extend('uniqueTypeAndUrl', function ($attribute, $value, $parameters, $validator) {
             $sites = Site::where('url', $value)
                                 ->where('type', $parameters[0]);
             if(count($parameters)>1){
@@ -25,7 +25,7 @@ class   AppServiceProvider extends ServiceProvider{
             }
             $count = $sites -> count();
             return $count === 0;
-        });*/
+        });
     }
 
     /**
