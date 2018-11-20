@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Log;
 use DB;
@@ -33,7 +34,7 @@ class Twitter extends Site {
         try {
             $post = Post::create([
                 'site' => $this->url,
-                'creation_date' => $item->pubDate,
+                'creation_date' => Carbon::parse($item->pubDate)->format('Y-m-d H:i:s'),
                 'content' => $this->_getContent($item),
                 'url' => $item->link,
                 'image' => $parseData['image']

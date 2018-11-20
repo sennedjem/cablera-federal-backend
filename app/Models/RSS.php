@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
+use DB;
 
 class RSS extends Site {
 
@@ -20,17 +22,40 @@ class RSS extends Site {
     }
 
     function buildPost($item, $parseData){
-        return new Post([
-            'site' => $parseData['site'],
-            'creation_date' => $item->pubDate,
-            'title' => $item->title,
-            'content' => $this->_getContent($item),
-            'url' => $item->link,
-            'image' => $this->_getImage($item)
-        ]);
+        $tags = $this->_getTags((array) $item->category);
+
+        DB::beginTransaction();
+        try {
+            $post = Post::create([
+                'site' => $parseData['site'],
+                'creation_date' => Carbon::parse($item->pubDate)->format('Y-m-d H:i:s'),
+                'title' => $item->title,
+                'content' => $this->_getContent($item),
+                'url' => $item->link,
+                'image' => $this->_getImage($item)
+            ]);
+            Tag::ifDoesntExistCreate($tags);
+            $post->tags()->sync(array_map('strtolower', $tags));
+            //$post->save();
+            DB::commit();
+            return $post;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            DB::rollback();
+            print_r($error);exit;
+            return null;
+        }
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    private function _getTagDescription($category){
+        return $category->__toString();
+    }
+
+    private function _getTags($categories){
+        return array_map(array($this, '_getTagDescription'),$categories);
+    }
 
     private function _getImage($item){
         $content = $item->description->__toString();
@@ -42,7 +67,15 @@ class RSS extends Site {
             strpos($content,'g"')-$imageInitPos-4
         );
 
-        return $image;
+        if(strpos($image,'.jpg') ||
+            strpos($image,'.jpeg') ||
+            strpos($image,'.png') ||
+            strpos($image,'.gif')
+        ){
+            return $image;
+        }else{
+            return '';
+        }
     }
 
     private function _getContent($item){
