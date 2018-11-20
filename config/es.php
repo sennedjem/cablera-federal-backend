@@ -60,36 +60,42 @@ return [
     |
     */
 
-    'indices' => [],
+    'indices' => [
+        'cablerafederal' => [
+            "aliases" => [
+                "cf"
+            ],
+            'settings' => [
+                "number_of_shards" => 1,
+                "number_of_replicas" => 0,
+            ],
+            'mappings' => [
+                'post' => [
 
-    'mappings' => [
+                    'properties' => [
 
-        'post' => [
+                        'id' => [
+                            'type' => 'long'],
+                        'site' => [
+                            'type' => 'keyword'],
+                        'creation_date' => [
+                            'type' => 'keyword'],
+                        'content' => [
+                            'type' => 'text'],
+                        'url' => [
+                            'type' => 'text'],
+                        'image' => [
+                            'type' => 'text'],
+                        'title' => [
+                            'type' => 'text'],
+                        'tags' => [
+                            'type' => 'text']    
+                    ]
 
-            'properties' => [
-
-                'id' => [
-                    'type' => 'long',
-                    'index'=> 'not_analyzed'
-                ],
-                'site' => [
-                    'type' => 'string',
-                    'index'=> 'not_analyzed'],
-                'creation_date' => [
-                    'type' => 'date',
-                    'format'=> 'yyyy-MM-dd HH:mm:ss'],
-                'content' => [
-                    'type' => 'string'],
-                'url' => [
-                    'type' => 'string'],
-                'image' => [
-                    'type' => 'string'],
-                'title' => [
-                    'type' => 'string'],
+                ]
             ]
-
         ]
+    ],
 
-    ]
-
+    
 ];

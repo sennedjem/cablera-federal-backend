@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('es','ElasticSearchController@index');
+Route::get('escreate','ElasticSearchController@create');
 Route::name('login')->post('login','LoginController@login');
 Route::post('users','UsersController@store');
 Route::middleware('auth:api')->group(function() {

@@ -14,18 +14,21 @@ class RSS extends Site {
     }
 
     function getParseData($xml){
+
         return array(
             'site' => $xml->channel->title
         );
     }
 
     function buildPost($item, $parseData){
+
+
         return new Post([
-            'site' => $parseData['site'],
-            'creation_date' => $item->pubDate,
-            'title' => $item->title,
+            'site' => strval($parseData['site']),
+            'creation_date' => strval($item->pubDate),
+            'title' => strval($item->title),
             'content' => $this->_getContent($item),
-            'url' => $item->link,
+            'url' => strval($item->link),
             'image' => $this->_getImage($item)
         ]);
     }
