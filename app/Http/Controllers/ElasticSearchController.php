@@ -13,9 +13,9 @@ class ElasticSearchController extends Controller{
     public function index(Request $request){
 
         if($request->per_page != null){          
-            return response()->json(PostES::all());
+            return response()->json(PostES::where('tags','like','mercados'));
         }
-        return response()->json(PostES::take($request->per_page)->get());
+        return response()->json(PostES::where('tags','like','mercados')->where('tags','like','economíapic.twitter.com/vu9wmj8c')->take($request->per_page)->get());
     }
 
     public function create(Request $request){

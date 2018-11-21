@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Media;
-use App\Models\ES\PostES;
+use DB;
 use App\Models\Post;
 use App\Traits\Filterable;
 
@@ -50,12 +50,18 @@ class Site extends Model {
 
     public function addPost($item,$parseData){
         $post = $this->buildPost($item,$parseData);
+        $tags = $this->getTags($item);
+        $tags = array_map('strtolower', $tags);
 
+        DB::beginTransaction();
         //TODO: No se tiene que hacer asi
         try{
             $post->save();
-            PostES::crearPost($post);
+            Tag::ifDoesntExistCreate($tags);
+            $this->updateES($post,$tags);
+            DB::commit();
         }catch (\Exception $e){
+            DB::rollback();
             \Log::error($e->getTraceAsString() . PHP_EOL);
         }
     }
@@ -66,6 +72,8 @@ class Site extends Model {
     public function withMedia_id($media_id){ $this->media_id = $media_id; return $this; }
 
     function getPosts(){}
+    function getTags($item){return [];}
+    function updateES($post,$tags){}
     function getParseData($xml){}
     function buildPost($item,$parseData){}
 }
