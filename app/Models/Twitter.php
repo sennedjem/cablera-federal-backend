@@ -36,8 +36,8 @@ class Twitter extends Site {
                 'site' => $this->url,
                 'creation_date' => Carbon::parse($item->pubDate)->format('Y-m-d H:i:s'),
                 'content' => $this->_getContent($item),
-                'url' => $item->link,
-                'image' => $parseData['image']
+                'url' => strval($item->link),
+                'image' => strval($parseData['image'])
             ]);
             Tag::ifDoesntExistCreate($hashtags);
             $post->tags()->sync(array_map('strtolower', $hashtags));

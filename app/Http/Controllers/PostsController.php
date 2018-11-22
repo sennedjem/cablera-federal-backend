@@ -17,7 +17,9 @@ class PostsController extends Controller{
      */
     public function index(Request $request){
         //
-        $request->sort_by = 'id';
+        //print_r($request);exit;
+
+        $request->sort_by = 'creation_date';
         $request->sort_dir = 'DESC';
         return response() -> json(Post::filter($request));
     }

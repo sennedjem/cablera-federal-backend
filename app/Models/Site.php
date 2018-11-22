@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Media;
+use App\Models\ES\PostES;
+use App\Models\Post;
 use App\Traits\Filterable;
 
 class Site extends Model {
@@ -52,8 +54,9 @@ class Site extends Model {
         //TODO: No se tiene que hacer asi
         try{
             $post->save();
+            PostES::crearPost($post);
         }catch (\Exception $e){
-            echo $e->getTraceAsString() . PHP_EOL;
+            \Log::error($e->getTraceAsString() . PHP_EOL);
         }
     }
 
