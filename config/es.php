@@ -77,9 +77,9 @@ return [
                         'id' => [
                             'type' => 'long'],
                         'site' => [
-                            'type' => 'keyword'],
+                            'type' => 'text'],
                         'creation_date' => [
-                            'type' => 'keyword'],
+                            'type' => 'text'],
                         'content' => [
                             'type' => 'text'],
                         'url' => [

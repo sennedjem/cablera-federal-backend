@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Log;
 use DB;
-use App\Models\ES\PostES;
+
 
 class Twitter extends Site {
 
