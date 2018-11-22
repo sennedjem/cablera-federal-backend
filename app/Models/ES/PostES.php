@@ -11,7 +11,7 @@ class PostES extends Model {
     protected $index = "cablerafederal";
 
 
-    public static function crearPost($post){
+    public static function crearPost($post,$tags){
         $newPost = new PostES;
         $newPost->id = $post->id;
         $newPost->site = $post->site;
@@ -19,6 +19,7 @@ class PostES extends Model {
         $newPost->url = $post->url;
         $newPost->image = $post->image;
         $newPost->title = $post->title;
+        $newPost->tags = $tags;
         $newPost->save();
     }
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Log;
 use DB;
+use App\Models\ES\PostES;
 
 class Twitter extends Site {
 
@@ -28,9 +29,7 @@ class Twitter extends Site {
     }
 
     function buildPost($item, $parseData){
-        $hashtags = $this->getHashtags($this->_getContent($item));
 
-        DB::beginTransaction();
         try {
             $post = Post::create([
                 'site' => $this->url,
@@ -39,17 +38,17 @@ class Twitter extends Site {
                 'url' => strval($item->link),
                 'image' => strval($parseData['image'])
             ]);
-            Tag::ifDoesntExistCreate($hashtags);
-            $post->tags()->sync(array_map('strtolower', $hashtags));
-            //$post->save();
-            DB::commit();
+
             return $post;
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            DB::rollback();
             return null;
         }
 
+    }
+
+    public function getTags($item){
+        return $this->getHashtags($this->_getContent($item));
     }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -57,6 +56,12 @@ class Twitter extends Site {
     private function getHashtags($text){
         preg_match_all('/#([^\s]+)/', $text, $matches);
         return $matches[1];
+    }
+
+    public function updateES($post,$tags){
+        $post->tags()->sync($tags);
+        PostES::crearPost($post,implode(",", $tags));
+        \Log::info(implode(",", $tags));
     }
 
     public function _getContent($item){
