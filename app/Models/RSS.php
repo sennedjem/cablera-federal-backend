@@ -22,9 +22,7 @@ class RSS extends Site {
     }
 
     function buildPost($item, $parseData){
-        $tags = $this->_getTags((array) $item->category);
 
-        DB::beginTransaction();
         try {
             $post = Post::create([
                 'site' => $parseData['site'],
@@ -34,15 +32,11 @@ class RSS extends Site {
                 'url' => $item->link,
                 'image' => $this->_getImage($item)
             ]);
-            Tag::ifDoesntExistCreate($tags);
-            $post->tags()->sync(array_map('strtolower', $tags));
-            //$post->save();
-            DB::commit();
             return $post;
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            DB::rollback();
-            print_r($error);exit;
+            echo $error;
+            \Log::info($error);
             return null;
         }
     }
@@ -53,8 +47,8 @@ class RSS extends Site {
         return $category->__toString();
     }
 
-    private function _getTags($categories){
-        return array_map(array($this, '_getTagDescription'),$categories);
+    public function getTags($item){
+        return array_map(array($this, '_getTagDescription'),(array) $item->category);
     }
 
     private function _getImage($item){

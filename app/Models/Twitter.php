@@ -58,12 +58,6 @@ class Twitter extends Site {
         return $matches[1];
     }
 
-    public function updateES($post,$tags){
-        $post->tags()->sync($tags);
-        PostES::crearPost($post,implode(",", $tags));
-        \Log::info(implode(",", $tags));
-    }
-
     public function _getContent($item){
         $title = substr(
             $item->title,

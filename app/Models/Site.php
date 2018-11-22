@@ -56,14 +56,22 @@ class Site extends Model {
         DB::beginTransaction();
         //TODO: No se tiene que hacer asi
         try{
-            $post->save();
-            Tag::ifDoesntExistCreate($tags);
-            $this->updateES($post,$tags);
+            if($post != null){
+                $post->save();
+                Tag::ifDoesntExistCreate($tags);
+                $post->tags()->sync($tags);
+                $this->updateES($post,$tags);
+            }
             DB::commit();
         }catch (\Exception $e){
             DB::rollback();
             \Log::error($e->getTraceAsString() . PHP_EOL);
         }
+    }
+    
+    public function updateES($post,$tags){
+        PostES::crearPost($post,implode(",", $tags));
+        \Log::info(implode(",", $tags));
     }
 
     public function withType($type){ $this->type = $type; return $this; }
@@ -73,7 +81,6 @@ class Site extends Model {
 
     function getPosts(){}
     function getTags($item){return [];}
-    function updateES($post,$tags){}
     function getParseData($xml){}
     function buildPost($item,$parseData){}
 }
