@@ -8,6 +8,7 @@ use App\Models\Media;
 use DB;
 use App\Models\Post;
 use App\Traits\Filterable;
+use App\Models\ES\PostES;
 
 class Site extends Model {
 
@@ -68,7 +69,7 @@ class Site extends Model {
             \Log::error($e->getTraceAsString() . PHP_EOL);
         }
     }
-    
+
     public function updateES($post,$tags){
         PostES::crearPost($post,implode(",", $tags));
         \Log::info(implode(",", $tags));
