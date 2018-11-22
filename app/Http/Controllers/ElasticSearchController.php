@@ -11,11 +11,20 @@ class ElasticSearchController extends Controller{
      *
      */
     public function index(Request $request){
-
-        if($request->per_page != null){          
-            return response()->json(PostES::where('tags','like','mercados'));
+        $query = PostES::body();
+        if($request->filter_field){
+            if($request->filter_field == 'tags'){
+                foreach (explode(',', $request->filter_value) as $value) {
+                    $query = $query->where('tags','like',$value);
+                }
+            } else {
+                $query = $query->where($request->filter_field,'like',$request->filter_value);
+            }
         }
-        return response()->json(PostES::where('tags','like','mercados')->where('tags','like','economíapic.twitter.com/vu9wmj8c')->take($request->per_page)->get());
+        $perpage = $request->per_page? $request->per_page : 10;
+        $page = $request->page? $request->page : 1;
+        $query->paginate($perpage,"page",$request->page);
+        return response()->json($query->get());
     }
 
     public function create(Request $request){
