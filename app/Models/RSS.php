@@ -76,12 +76,14 @@ class RSS extends Site {
         $text = $item->description->__toString();
         $contentInitPos = strpos($text,'<p>');
 
-        $content = substr(
-            $text,
-            $contentInitPos+3,
-            strpos($text,'&#')-$contentInitPos-5
-        );
+        $content = $text;
 
+        if($contentInitPos)
+            $content = substr(
+                $text,
+                $contentInitPos+3,
+                strpos($text,'&#')-$contentInitPos-5
+            );
 
         return $content;
     }
