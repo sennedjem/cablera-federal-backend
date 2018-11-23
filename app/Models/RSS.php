@@ -25,7 +25,7 @@ class RSS extends Site {
 
         try {
             $post = Post::create([
-                'site' => strval($parseData['site']),
+                'site_id' => $this->id,
                 'creation_date' => Carbon::parse($item->pubDate)->format('Y-m-d H:i:s'),
                 'title' => strval($item->title),
                 'content' => $this->_getContent($item),

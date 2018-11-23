@@ -76,7 +76,7 @@ return [
 
                         'id' => [
                             'type' => 'long'],
-                        'site' => [
+                        'site_id' => [
                             'type' => 'text'],
                         'creation_date' => [
                             'type' => 'text'],
@@ -89,7 +89,9 @@ return [
                         'title' => [
                             'type' => 'text'],
                         'tags' => [
-                            'type' => 'text']    
+                            'type' => 'text'],
+                        'site_type' => [
+                            'type' => 'text']        
                     ]
 
                 ]

@@ -12,18 +12,15 @@ class ElasticSearchController extends Controller{
      */
     public function index(Request $request){
         $query = PostES::body();
-        if($request->filter_field){
-            if($request->tags != null){
-                foreach (explode(',', $request->tags) as $value) {
-                    $query = $query->where('tags','like',$value);
-                }
-            } 
-            $fieldsToFilter = ['media_id','creation_date','type'];
-            foreach ($fieldsToFilter as $field){
-                \Log::info($request[$field]);
-                if($request[$field]!=null){
-                    $query = $query->where($field,'like',$request[$field]);
-                }
+        if($request->tags != null){
+            foreach (explode(',', $request->tags) as $value) {
+                $query = $query->where('tags','like',$value);
+            }
+        } 
+        $fieldsToFilter = ['media_id','creation_date','site_type'];
+        foreach ($fieldsToFilter as $field){
+            if($request[$field]!=null){
+                $query = $query->where($field,'like',$request[$field]);
             }
         }
         $perpage = $request->per_page? $request->per_page : 10;

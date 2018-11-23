@@ -31,8 +31,9 @@ class Twitter extends Site {
     function buildPost($item, $parseData){
 
         try {
+            \Log::info("id: {$this->id}");
             $post = Post::create([
-                'site' => $this->url,
+                'site_id' => $this->id,
                 'creation_date' => Carbon::parse($item->pubDate)->format('Y-m-d H:i:s'),
                 'content' => $this->_getContent($item),
                 'url' => strval($item->link),

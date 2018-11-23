@@ -18,7 +18,8 @@ class Site extends Model {
         'type',
         'url',
         'user_id',
-        'media_id'
+        'media_id',
+        'id'
     ];
  	
  	protected $with = ['user','media'];
@@ -66,16 +67,18 @@ class Site extends Model {
             DB::commit();
         }catch (\Exception $e){
             DB::rollback();
+            \Log::error($e);
             \Log::error($e->getTraceAsString() . PHP_EOL);
         }
     }
 
     public function updateES($post,$tags){
-        PostES::crearPost($post,implode(",", $tags));
+        PostES::crearPost($post,implode(",", $tags),$this->media_id,$this->type);
         \Log::info(implode(",", $tags));
     }
 
     public function withType($type){ $this->type = $type; return $this; }
+    public function withId($id){ $this->id = $id; return $this; }
     public function withUrl($url){ $this->url = $url; return $this; }
     public function withUser_id($user_id){ $this->user_id = $user_id; return $this; }
     public function withMedia_id($media_id){ $this->media_id = $media_id; return $this; }

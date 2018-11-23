@@ -56,7 +56,8 @@ class getPosts extends Command{
             $site = $site->withType($siteData->type)
                          ->withUrl($siteData->url)
                          ->withUser_id($siteData->user_id)
-                         ->withMedia_id($siteData->media_id);
+                         ->withMedia_id($siteData->media_id)
+                         ->withId($siteData->id);
 
             $site->updatePosts();
         }

@@ -16,15 +16,16 @@ class PostES extends Model {
         }
     }
 
-    public static function crearPost($post,$tags){
+    public static function crearPost($post, $tags, $media_id, $type){
         $newPost = new PostES;
         $newPost->id = $post->id;
-        $newPost->site = $post->site;
+        $newPost->media_id = $media_id;
         $newPost->content = $post->content;
         $newPost->creation_date = $post->creation_date;
         $newPost->url = $post->url;
         $newPost->image = $post->image;
         $newPost->title = $post->title;
+        $newPost->site_type = $type;
         $newPost->tags = $tags;
         $newPost->save();
     }
