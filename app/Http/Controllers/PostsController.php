@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\Post\Update;
 use App\Models\Post;
+use App\Models\ES\PostES;
 use App\Models\Tag;
 use DB;
 
@@ -21,7 +22,14 @@ class PostsController extends Controller{
 
         $request->sort_by = 'creation_date';
         $request->sort_dir = 'DESC';
-        return response() -> json(Post::filter($request));
+        $postsDriver = env('POSTS_DRIVER', 'mysql');
+        \Log::info($postsDriver);
+        if($postsDriver == 'elasticsearch'){
+            $posts = PostES::filter($request);
+        } else {
+            $posts = Post::filter($request);
+        }
+        return response() -> json($posts);
     }
 
     public function show(Request $request, $id){

@@ -10,11 +10,33 @@ class PostES extends Model {
 
     protected $index = "cablerafederal";
 
-    public function filter($request){
-        if($request->per_page != null){          
-            return response()->json(PostES::where('tags','like','mercados'));
+
+     public static function filter($request){
+        $query = self::body();
+        if($request->tags != null){
+            foreach (explode(',', $request->tags) as $value) {
+                $query = $query->where('tags','like',$value);
+            }
+        } 
+        $fieldsToFilter = ['media_id','creation_date','site_type'];
+        foreach ($fieldsToFilter as $field){
+            if($request[$field]!=null){
+                $query = $query->where($field,'like',$request[$field]);
+            }
         }
+        $perpage = $request->per_page? $request->per_page : 12;
+        $page = $request->page? $request->page : 1;
+        $query->paginate($perpage,"page",$request->page);
+        $query = $query->paginate($perpage,"page",$request->page);
+        $data = $query->toArray();
+        $data['data'] = array_map(function($post) {
+            $post['tags']=explode(',', $post['tags']);
+            $post['tags']= array_map(function($tag) {return ["description"=>$tag];}, $post['tags']);
+            return $post;
+        }, $data['data']);
+        return $data;
     }
+
 
     public static function crearPost($post, $tags, $media_id, $type){
         $newPost = new PostES;
