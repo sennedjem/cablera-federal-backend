@@ -14,6 +14,7 @@ class PostES extends Model {
      public static function filter($request){
         $query = self::body();
         if($request->tags != null){
+            \Log::info((explode(',', $request->tags)));
             foreach (explode(',', $request->tags) as $value) {
                 $query = $query->where('tags','like',$value);
             }
@@ -37,6 +38,18 @@ class PostES extends Model {
         return $data;
     }
 
+    public static function find($id){
+        $find = self::where('id',$id)->get()->toArray()[0];
+        $find['tags']=explode(',', $find['tags']);
+        $find['tags']= array_map(function($tag) {return ["description"=>$tag];}, $find['tags']);
+        return $find;
+    }
+
+    public static function update($request,$tags){
+        $find = self::where('id',$request->id)->get()[0];
+        $find->tags=implode(",", $tags);
+        $find->save();
+    }
 
     public static function crearPost($post, $tags, $media_id, $type){
         $newPost = new PostES;

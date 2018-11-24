@@ -73,8 +73,10 @@ class Site extends Model {
     }
 
     public function updateES($post,$tags){
-        PostES::crearPost($post,implode(",", $tags),$this->media_id,$this->type);
-        \Log::info(implode(",", $tags));
+        $postsDriver = env('POSTS_DRIVER', 'mysql');
+        if($postsDriver == 'elasticsearch'){
+            PostES::crearPost($post,implode(",", $tags),$this->media_id,$this->type);
+        }
     }
 
     public function withType($type){ $this->type = $type; return $this; }

@@ -12,7 +12,6 @@ class Update extends BasicRequest{
     public function rules() {
         
         return [
-			'site'          => ['required'],
 			'creation_date' => ['required'],
 			'content'       => ['required'],
 			'url'           => ['required'],

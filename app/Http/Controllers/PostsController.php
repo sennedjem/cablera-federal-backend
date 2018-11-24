@@ -32,9 +32,15 @@ class PostsController extends Controller{
         return response() -> json($posts);
     }
 
-    public function show(Request $request, $id){
+     public function show(Request $request, $id){
         //
-        return response() -> json(Post::find($id));
+        $postsDriver = env('POSTS_DRIVER', 'mysql');
+        if($postsDriver == 'elasticsearch'){
+            $post = PostES::find($id);
+        } else {
+            $post = Post::find($id);
+        }
+        return response() -> json($post);
     }
 
     /**
@@ -50,7 +56,11 @@ class PostsController extends Controller{
 	        $post -> save();
 	        Tag::ifDoesntExistCreate($tags);
 	        $post->tags()->sync(array_map('strtolower', $tags));
-
+            $postsDriver = env('POSTS_DRIVER', 'mysql');
+            if($postsDriver == 'elasticsearch'){
+                \Log::info($request);
+                $posts = PostES::update($request,$tags);
+            } 
 			DB::commit();
     		return response() -> json($post);
 	    } catch (\Exception $e) {
