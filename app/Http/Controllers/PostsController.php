@@ -7,6 +7,7 @@ use App\Http\Requests\Post\Update;
 use App\Models\Post;
 use App\Models\ES\PostES;
 use App\Models\Tag;
+use App\Models\UsersFavsPost;
 use DB;
 
 class PostsController extends Controller{
@@ -69,4 +70,10 @@ class PostsController extends Controller{
 			return response() -> json($error,500);
 	    }
     }
+
+    public function getFavouritesPosts(Request $request, $userId){
+        $es_ids = UsersFavsPost::where('user_id',$userId)->get()->map(function($post){return $post->post_es_id;});
+        $posts = PostES::whereIn('_id',$es_ids);
+        return response() -> json($posts);
+    } 
 }
