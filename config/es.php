@@ -79,7 +79,7 @@ return [
                         'site_id' => [
                             'type' => 'text'],
                         'creation_date' => [
-                            'type' => 'text'],
+                            'type' => 'keyword'],
                         'content' => [
                             'type' => 'text'],
                         'url' => [

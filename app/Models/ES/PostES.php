@@ -12,7 +12,7 @@ class PostES extends Model {
 
 
      public static function filter($request){
-        $query = self::body();
+        $query = self::orderBy('creation_date','desc');
         if($request->tags != null){
             \Log::info((explode(',', $request->tags)));
             foreach (explode(',', $request->tags) as $value) {
@@ -56,7 +56,7 @@ class PostES extends Model {
         $newPost->id = $post->id;
         $newPost->media_id = $media_id;
         $newPost->content = $post->content;
-        $newPost->creation_date = $post->creation_date;
+        $newPost->creation_date = substr($post->creation_date, 0, 10);
         $newPost->url = $post->url;
         $newPost->image = $post->image;
         $newPost->title = $post->title;
