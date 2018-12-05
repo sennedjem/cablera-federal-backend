@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule){
-        $schedule->command('posts:update')->cron('*/'.env('UPDATE_TIME', '1').' * * * *');
+        $schedule->command('posts:update')->cron('*/'.env('UPDATE_TIME', '20').' * * * *');
     }
 
     /**

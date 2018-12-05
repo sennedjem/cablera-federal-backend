@@ -5,6 +5,7 @@ return [
         "Instagram" => 'Instagram',
         "Twitter"   => 'Twitter',
         "Facebook"  => 'Facebook',
-        "RSS"       =>  "RSS"
+        "RSS"       =>  'RSS',
+        "JSON"      =>  'JSON'
     ]
 ];
