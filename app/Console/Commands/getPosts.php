@@ -7,6 +7,7 @@ use App\Models\Site;
 use Log;
 use App\Models\RSS;
 use App\Models\Twitter;
+use App\Models\JSON;
 
 class getPosts extends Command{
 
@@ -50,6 +51,10 @@ class getPosts extends Command{
 
                 case 'Twitter':
                     $site = new Twitter();
+                    break;
+
+                case 'JSON':
+                    $site = new JSON();
                     break;
             }
 
